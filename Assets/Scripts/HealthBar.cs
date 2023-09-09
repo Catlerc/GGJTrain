@@ -16,6 +16,7 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
+        
         playerHealth.onHealthChange.AddListener(changeHealth);
         defaultWidth = healthBarRect.sizeDelta.x;
     }
