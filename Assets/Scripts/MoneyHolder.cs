@@ -7,9 +7,9 @@ public class MoneyHolder : MonoBehaviour
     public UnityEvent<int> onCoinsChange = new();
 
 
-    bool canSpend(int amount) => coins >= amount;
+    public bool canSpend(int amount) => coins >= amount;
 
-    bool spend(int amount)
+    public bool spend(int amount)
     {
         if (coins >= amount)
         {
@@ -21,7 +21,7 @@ public class MoneyHolder : MonoBehaviour
             return false;
     }
 
-    void add(int amount)
+    public void add(int amount)
     {
         coins += amount;
         onCoinsChange.Invoke(coins);
