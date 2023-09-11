@@ -9,11 +9,10 @@ public class Player : MonoBehaviour
     private new Rigidbody2D rigidbody;
     public SpriteRenderer sprite;
     public float speed = 5;
-    private HealthHolder health;
+    public HealthHolder health;
 
     void Start()
     {
-        health = GetComponent<HealthHolder>();
         rigidbody = GetComponent<Rigidbody2D>();
         health.onDeath.AddListener(death);
     }
