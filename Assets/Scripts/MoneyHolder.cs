@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class MoneyHolder : MonoBehaviour
 {
+    public static MoneyHolder instance; 
     public int coins;
     public UnityEvent<int> onCoinsChange = new();
 
+
+    private void Start()
+    {
+        instance = this;
+    }
 
     public bool canSpend(int amount) => coins >= amount;
 
