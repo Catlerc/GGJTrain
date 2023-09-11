@@ -7,15 +7,19 @@ public class Turret : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float rotateSpeed = 90;
+    [SerializeField] private float reloadTime = 3;
+    [SerializeField] private float bulletSpeed = 10;
+    [SerializeField] private Transform target;
+    [SerializeField] private GameObject bulletPrefab;
     [Header("Sprites")]
     [SerializeField] private Sprite right;
     [SerializeField] private Sprite rightUp, up, leftUp, left, leftDown, down, rightDown;
     private Sprite[] sprites;
-    private Sprite currentSprite;
-    private Transform target;
+    private SpriteRenderer spriteRenderer;
     private float targetDistance = 0;
     private Quaternion targetAngle = Quaternion.Euler(0, 0, 0);
     private Quaternion currentAngle = Quaternion.Euler(0, 0, 0);
+    private float reloadTimer = 0;
 
     public Transform Target
     {
@@ -25,33 +29,52 @@ public class Turret : MonoBehaviour
             target = value;
         }
     }
+
+    void fire()
+    {
+        reloadTimer -= Time.fixedDeltaTime;
+        if (reloadTimer <= 0 && !target.Equals(null))
+        {
+            GameObject bullet = Instantiate(bulletPrefab);
+            bullet.transform.position = transform.position;
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            float angle = currentAngle.eulerAngles.z * Mathf.Deg2Rad;
+            float x = -Mathf.Sin(angle);
+            float y = Mathf.Cos(angle);
+            Vector2 direction = new Vector2(x, y) * bulletSpeed;
+            rb.AddForce(direction, ForceMode2D.Impulse);
+            reloadTimer = reloadTime;
+        }
+    }
     
     void Start()
     {
-        sprites = new[] { right, rightUp, up, leftUp, left, leftDown, down, rightDown };
-        currentSprite = GetComponent<SpriteRenderer>().sprite;
+        sprites = new[] { up, leftUp, left, leftDown, down, rightDown, right, rightUp };
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void updateSprite()
     {
         float deltaAngle = 360f / sprites.Length;
-        int index = (int)(currentAngle.z / deltaAngle + deltaAngle / 2);
-        //currentSprite = sprites[index];
-        print(index);
+        int index = (int)((currentAngle.eulerAngles.z / deltaAngle + 0.5f) % sprites.Length);
+        spriteRenderer.sprite = sprites[index];
     }
 
     void updateAngle()
     {
         targetDistance = Vector3.Distance(transform.position, target.position);
+        Vector3 dir = target.position - transform.position;
+        targetAngle = Quaternion.LookRotation(Vector3.forward, dir);
         currentAngle = Quaternion.RotateTowards(currentAngle, targetAngle, rotateSpeed * Time.fixedDeltaTime);
         updateSprite();
     }
 
     private void FixedUpdate()
     {
-        if (target != null)
+        if (!target.Equals(null))
         {
             updateAngle();
+            fire();
         }
     }
 }
