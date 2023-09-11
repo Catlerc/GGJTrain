@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -18,5 +19,7 @@ public class PlayerControl : MonoBehaviour
         var horizontal = Input.GetAxis("Horizontal");
         rigidbody.velocity = new Vector2(horizontal, Input.GetAxis("Vertical")).normalized * speed;
         sprite.flipX = horizontal < 0;
+
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("MainMenu");
     }
 }
