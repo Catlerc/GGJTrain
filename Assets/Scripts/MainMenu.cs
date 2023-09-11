@@ -1,10 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void play()
+    public AudioSource clickSound;
+
+
+    public void play() => StartCoroutine(playRoutine());
+
+    private IEnumerator playRoutine()
     {
+        clickSound.Play();
+        yield return new WaitForSeconds(clickSound.clip.length);
         SceneManager.LoadScene("World");
     }
 }

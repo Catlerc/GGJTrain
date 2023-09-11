@@ -15,7 +15,7 @@ public class HealthHolder : MonoBehaviour
     public void damage(float value)
     {
         health = health - value;
-        if (health < 0)
+        if (health <= 0 && !dead)
         {
             health = 0;
             dead = true;

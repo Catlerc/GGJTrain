@@ -10,10 +10,12 @@ public class StoreSlot : MonoBehaviour
     public StoreItem item;
     public Store store;
     public bool canBuy = false;
+    public AudioSource clickSound;
 
 
     private void Start()
     {
+        clickSound = GetComponent<AudioSource>();
         text.text = item.cost.ToString();
         image.sprite = item.sprite;
     }
@@ -35,6 +37,10 @@ public class StoreSlot : MonoBehaviour
 
     public void buy()
     {
-        if (canBuy) store.onBuy.Invoke(item);
+        if (canBuy)
+        {
+            store.onBuy.Invoke(item);
+            clickSound.Play();
+        }
     }
 }

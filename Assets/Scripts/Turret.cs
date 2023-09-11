@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Turret : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private float rotateSpeed = 90;
+    [Header("Settings")] [SerializeField] private float rotateSpeed = 90;
     [SerializeField] private float reloadTime = 3;
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] private Transform target;
     [SerializeField] private GameObject bulletPrefab;
-    [Header("Sprites")]
-    [SerializeField] private Sprite right;
+    [Header("Sprites")] [SerializeField] private Sprite right;
     [SerializeField] private Sprite rightUp, up, leftUp, left, leftDown, down, rightDown;
+    private AudioSource shotSound;
     private Sprite[] sprites;
     private SpriteRenderer spriteRenderer;
     private float targetDistance = 0;
@@ -24,10 +25,7 @@ public class Turret : MonoBehaviour
     public Transform Target
     {
         get => target;
-        set
-        {
-            target = value;
-        }
+        set { target = value; }
     }
 
     void fire()
@@ -35,6 +33,8 @@ public class Turret : MonoBehaviour
         reloadTimer -= Time.fixedDeltaTime;
         if (reloadTimer <= 0 && !target.Equals(null))
         {
+            shotSound.pitch = Random.Range(0.7f, 1.3f);
+            shotSound.Play();
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = transform.position;
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -43,14 +43,20 @@ public class Turret : MonoBehaviour
             float y = Mathf.Cos(angle);
             Vector2 direction = new Vector2(x, y) * bulletSpeed;
             rb.AddForce(direction, ForceMode2D.Impulse);
+            var from = transform.position;
+            from.z = 0;
+            var to = target.position;
+            to.z = 0;
+            bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, to-from);
             reloadTimer = reloadTime;
         }
     }
-    
+
     void Start()
     {
         sprites = new[] { up, leftUp, left, leftDown, down, rightDown, right, rightUp };
         spriteRenderer = GetComponent<SpriteRenderer>();
+        shotSound = GetComponent<AudioSource>();
     }
 
     void updateSprite()
