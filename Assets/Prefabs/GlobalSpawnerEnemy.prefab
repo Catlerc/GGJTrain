@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4927626595834925426}
   - component: {fileID: 2194898012202012447}
+  - component: {fileID: 2815689775144026163}
   m_Layer: 0
   m_Name: GlobalSpawnerEnemy
   m_TagString: Untagged
@@ -44,4 +45,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bacfd6d3ad5f7a469acdd93083b832a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTimer: 5
+  respawnTime: 3
+  spawnZoneX: 2
+  spawnZoneY: 2
   monsterPrefab: {fileID: 8217771095211615372, guid: 691be512cdb73b344b32569d4a5a73d1, type: 3}
+--- !u!114 &2815689775144026163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5298277320881426924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf759ea2ae02f7a4a9e49fca96621169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generateStartCoins: 5
+  startSpawn: 3
+  spawnSpeed: 3
+  coinPrefab: {fileID: 5430758777047289419, guid: 54bc1e328e4b7e34a86db43cd723277d, type: 3}

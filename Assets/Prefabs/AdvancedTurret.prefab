@@ -62,11 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7433275988565735038, guid: bcd8b62044316f2428e021a41a62f234, type: 3}
       propertyPath: reloadTime
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7433275988565735038, guid: bcd8b62044316f2428e021a41a62f234, type: 3}
       propertyPath: bulletSpeed
-      value: 13
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7433275988565735038, guid: bcd8b62044316f2428e021a41a62f234, type: 3}
       propertyPath: rotateSpeed

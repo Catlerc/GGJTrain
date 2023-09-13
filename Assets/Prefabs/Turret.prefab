@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 90
-  reloadTime: 3
-  bulletSpeed: 10
+  reloadTime: 1
+  bulletSpeed: 20
   target: {fileID: 0}
   bulletPrefab: {fileID: 7401342799712784952, guid: 7132f4e785d10454a9f143e3f7dbf023, type: 3}
   right: {fileID: 21300000, guid: 5f119a7747cb3ef4b81646e8b53e4866, type: 3}
