@@ -33,6 +33,15 @@ public class Enemy : MonoBehaviour
             target = value;
         }
     }
+    
+    private void searchPlayer()
+    {
+        if (Target.Equals(null))
+        {
+            Target = FindObjectOfType<Player>().transform;
+        }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +52,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!target.Equals(null))
+        searchPlayer();
+        if (!Target.Equals(null))
         {
-            Vector2 deltaVector = target.position - transform.position;
+            Vector2 deltaVector = Target.position - transform.position;
             spriteRenderer.flipX = deltaVector.x < 0;
             rb.AddForce(deltaVector.normalized * (speed * Time.fixedDeltaTime), ForceMode2D.Force);
         }

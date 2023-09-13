@@ -31,7 +31,7 @@ public class Turret : MonoBehaviour
     void fire()
     {
         reloadTimer -= Time.fixedDeltaTime;
-        if (reloadTimer <= 0 && !target.Equals(null))
+        if (reloadTimer <= 0 && !Target.Equals(null))
         {
             shotSound.pitch = Random.Range(0.7f, 1.3f);
             shotSound.Play();
@@ -45,7 +45,7 @@ public class Turret : MonoBehaviour
             rb.AddForce(direction, ForceMode2D.Impulse);
             var from = transform.position;
             from.z = 0;
-            var to = target.position;
+            var to = Target.position;
             to.z = 0;
             bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, to-from);
             reloadTimer = reloadTime;
@@ -54,9 +54,9 @@ public class Turret : MonoBehaviour
 
     void searchEnemy()
     {
-        if (target.Equals(null))
+        if (Target.Equals(null))
         {
-            target = FindObjectOfType<Enemy>().transform;
+            Target = FindObjectOfType<Enemy>().transform;
         }
     }
 
@@ -76,8 +76,8 @@ public class Turret : MonoBehaviour
 
     void updateAngle()
     {
-        targetDistance = Vector3.Distance(transform.position, target.position);
-        Vector3 dir = target.position - transform.position;
+        targetDistance = Vector3.Distance(transform.position, Target.position);
+        Vector3 dir = Target.position - transform.position;
         targetAngle = Quaternion.LookRotation(Vector3.forward, dir);
         currentAngle = Quaternion.RotateTowards(currentAngle, targetAngle, rotateSpeed * Time.fixedDeltaTime);
         updateSprite();
