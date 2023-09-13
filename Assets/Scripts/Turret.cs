@@ -52,6 +52,14 @@ public class Turret : MonoBehaviour
         }
     }
 
+    void searchEnemy()
+    {
+        if (target.Equals(null))
+        {
+            target = FindObjectOfType<Enemy>().transform;
+        }
+    }
+
     void Start()
     {
         sprites = new[] { up, leftUp, left, leftDown, down, rightDown, right, rightUp };
@@ -77,6 +85,7 @@ public class Turret : MonoBehaviour
 
     private void FixedUpdate()
     {
+        searchEnemy();
         if (!target.Equals(null))
         {
             updateAngle();
