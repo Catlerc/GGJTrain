@@ -56,7 +56,11 @@ public class Turret : MonoBehaviour
     {
         if (Target.Equals(null))
         {
-            Target = FindObjectOfType<Enemy>().transform;
+            var t = FindObjectOfType<Enemy>();
+            if (!t.Equals(null))
+            {
+                Target = t.transform;
+            }
         }
     }
 
